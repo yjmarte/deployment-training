@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'includes/header.html' %}
+<div class="row mt-4">
+    <div class="col-6">
+        <h3 class="d-flex justify-content-center mb-3">Add Book</h3>
+        
+        <form action="/books/create" method="post">
+            {% csrf_token %}
+            {% include 'includes/book_messages.html' %}
+            {% for field in form %}
+            <div class="row mt-3">
+                <strong class="mb-2">{{ field.label }}</strong>
+                {{ field }}
+            </div>
+            {% endfor %}
+            <div class="row mt-3">
+                <div class="col d-flex justify-content-center align-items-center">
+                    <input type="submit" value="Add Book" class="btn btn-info text-white">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-6">
+        <h3 class="d-flex justify-content-center mb-3">Your Favorites</h3>
+        {% for book in all_books %}
+            {% if user in book.favorited_by.all %}
+            <div class="row mt-2">
+                <div class="col-4 offset-2 d-flex justify-content-center flex-column">
+                    <h5 class="d-flex justify-content-center w-auto"><a class="link-info" href="/books/{{book.id}}">{{book.title}}</a></h5>
+                    <small class="d-flex justify-content-center w-auto">(added by {{book.poster.first_name}} {{book.poster.last_name}})</small>
+                </div>
+                <div class="col-auto d-flex align-items-center">
+                    <a href="/unfavorite/{{book.id}}" class="btn btn-sm btn-danger w-auto">Unfavorite</a>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+        <h3 class="d-flex justify-content-center my-3">Other Books</h3>
+        {% for book in all_books %}
+            {% if user not in book.favorited_by.all %}
+            <div class="row">
+                <div class="col-4 offset-2 d-flex justify-content-center flex-column">
+                    <h5 class="d-flex justify-content-center w-auto"><a class="link-info" href="/books/{{book.id}}">{{book.title}}</a></h5>
+                    <small class="d-flex justify-content-center w-auto">(added by {{book.poster.first_name}} {{book.poster.last_name}})</small>
+                </div>
+                <div class="col-auto d-flex align-items-center">
+                    <a href="/favorite/{{book.id}}" class="btn btn-sm btn-info text-white w-auto">Favorite</a>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

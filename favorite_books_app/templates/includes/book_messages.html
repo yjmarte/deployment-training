@@ -1,0 +1,9 @@
+{% if messages %}
+    {% for message in messages %}
+        {% if 'book' in message.tags %}
+            <div class="alert {{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}

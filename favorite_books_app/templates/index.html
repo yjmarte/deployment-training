@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row mt-4">
+    <div class="col-5">
+        <h3 class="d-flex justify-content-center mb-3">Registration</h3>
+        <form action="/register" method="post">
+        {% csrf_token %}
+        {% include 'includes/registration_messages.html' %}
+        {% for field in r_form %}
+        <div class="row mt-3">
+            <strong class="mb-2">{{ field.label }}</strong>
+            {{ field }}
+        </div>
+        {% endfor %}
+        <div class="row mt-3">
+            <div class="col d-flex justify-content-center align-items-center">
+                <input type="submit" value="Register" class="btn btn-info text-white">
+            </div>
+        </div>
+        </form>
+    </div>
+    <div class="col-5 offset-2">
+        <h3 class="d-flex justify-content-center mb-3">Login</h3>
+        <form action="/login" method="post">
+        {% csrf_token %}
+        {% include 'includes/login_messages.html' %}
+        {% for field in l_form %}
+        <div class="row mt-3">
+            <strong class="mb-2">{{ field.label }}</strong>
+            {{ field }}
+        </div>
+        {% endfor %}
+        <div class="row mt-3">
+            <div class="col d-flex justify-content-center align-items-center">
+                <input type="submit" value="Login" class="btn btn-info text-white">
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,12 @@
+<div class="row mt-4 pb-2 border-bottom border-1 border-dark">
+    <div class="col-10 d-flex align-items-center">
+        <h2>Welcome, {{ user.first_name }} {{ user.last_name }}</h2>
+    </div>
+    <div class="col-2 d-flex justify-content-end align-items-center">
+        {% if request.path != '/books' %}
+            <a href="/books" class="btn btn-sm btn-info text-white w-auto me-4">Home</a>
+        {% endif %}
+        <a href="/books/favorited" class="btn btn-sm btn-info text-white w-auto me-4">Favorites</a>
+        <a href="/logout" class="btn btn-sm btn-info text-white w-auto">Logout</a>
+    </div>
+</div>
